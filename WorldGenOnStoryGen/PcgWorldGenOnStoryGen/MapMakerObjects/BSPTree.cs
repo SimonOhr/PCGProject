@@ -101,7 +101,7 @@ namespace PcgWorldGenOnStoryGen
 
         void MakeRoom(ref Tile[,] grid)
         {
-            roomBuilder = new RoomBuilder(grid, minSize, maxSize, TileType.MINER, new Vector2(area.X,area.Y));
+            roomBuilder = new RoomBuilder(ref grid, minSize, maxSize, TileType.MINER, new Vector2(area.X,area.Y));
             roomBuilder.GenerateRoom();
         }
 

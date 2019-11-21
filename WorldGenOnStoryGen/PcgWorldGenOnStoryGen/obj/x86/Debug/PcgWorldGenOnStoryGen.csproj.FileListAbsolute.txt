@@ -50,3 +50,29 @@ C:\Users\Spellabb2018\Desktop\WorldGenOnStoryGen\WorldGenOnStoryGen\PcgWorldGenO
 C:\Users\Spellabb2018\Desktop\WorldGenOnStoryGen\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\obj\x86\Debug\PcgWorldGenOnStoryGen.exe
 C:\Users\Spellabb2018\Desktop\WorldGenOnStoryGen\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\obj\x86\Debug\PcgWorldGenOnStoryGen.pdb
 C:\Users\Simon\Desktop\SkolProjekt\År 3\PCG\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\obj\x86\Debug\PcgWorldGenOnStoryGen.csprojResolveAssemblyReference.cache
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\Content\32x32_map_tile v3.1 [MARGINLESS].xnb
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\PcgWorldGenOnStoryGen.exe
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\PcgWorldGenOnStoryGen.pdb
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\MonoGame.Framework.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.XInput.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\MonoGame.Framework.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.XInput.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\obj\x86\Debug\PcgWorldGenOnStoryGen.csprojAssemblyReference.cache
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\obj\x86\Debug\PcgWorldGenOnStoryGen.csproj.CoreCompileInputs.cache
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\obj\x86\Debug\PcgWorldGenOnStoryGen.csproj.CopyComplete
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\obj\x86\Debug\PcgWorldGenOnStoryGen.exe
+D:\githubstuff\PCGProject\WorldGenOnStoryGen\PcgWorldGenOnStoryGen\obj\x86\Debug\PcgWorldGenOnStoryGen.pdb

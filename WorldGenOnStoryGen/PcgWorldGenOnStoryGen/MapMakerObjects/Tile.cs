@@ -45,23 +45,23 @@ namespace PcgWorldGenOnStoryGen
         public Color Color { get; set; }
 
 
-        public Tile(Texture2D tex, Vector2 dest, int indexX, int indexY, TileType defaultType = TileType.NONE)
+        public Tile(Texture2D tex, Vector2 dest, int indexX, int indexY, int weight, TileType defaultType = TileType.NONE)
         {
             this.tex = tex;
             DestVect = dest;
             selectedType = defaultType;
             X = indexX;
             Y = indexY;
-
-            InitGlobalValues();
+            Weight = weight;
+            InitValues();
             hitbox = new Rectangle((X * TileSize), (Y * TileSize), TileSize, TileSize);
         }
 
-        void InitGlobalValues()
+        void InitValues()
         {
             rnd = new Random();
             TileSize = 32;
-            Weight = SetWeight();          
+            //Weight = SetWeight();          
             
             src = new Rectangle((int)GetMapValues().X, (int)GetMapValues().Y, TileSize, TileSize);
             Dest = new Rectangle((int)DestVect.X, (int)DestVect.Y, TileSize, TileSize);
@@ -70,9 +70,9 @@ namespace PcgWorldGenOnStoryGen
             IsWalkable = true;
         }
 
-        int SetWeight()
+        public void SetWeight(int _weight)
         {
-            return rnd.Next(1, 5);
+            Weight = _weight;
         }
 
         public void RollBranchTile(int rnd)

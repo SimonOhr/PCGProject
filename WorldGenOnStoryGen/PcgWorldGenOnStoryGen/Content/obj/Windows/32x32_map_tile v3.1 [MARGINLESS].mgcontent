@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Simon/Desktop/SkolProjekt/År 3/PCG/WorldGenOnStoryGen/PcgWorldGenOnStoryGen/Content/32x32_map_tile v3.1 [MARGINLESS].png</SourceFile>
+  <SourceFile>D:/githubstuff/PCGProject/WorldGenOnStoryGen/PcgWorldGenOnStoryGen/Content/32x32_map_tile v3.1 [MARGINLESS].png</SourceFile>
   <SourceTime>2018-10-31T16:34:12+01:00</SourceTime>
-  <DestFile>C:/Users/Simon/Desktop/SkolProjekt/År 3/PCG/WorldGenOnStoryGen/PcgWorldGenOnStoryGen/Content/bin/Windows/32x32_map_tile v3.1 [MARGINLESS].xnb</DestFile>
-  <DestTime>2018-11-01T16:56:30.9219326+01:00</DestTime>
+  <DestFile>D:/githubstuff/PCGProject/WorldGenOnStoryGen/PcgWorldGenOnStoryGen/Content/bin/Windows/32x32_map_tile v3.1 [MARGINLESS].xnb</DestFile>
+  <DestTime>2019-11-06T18:08:36.1239611+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

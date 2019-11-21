@@ -35,7 +35,8 @@ namespace PcgWorldGenOnStoryGen
 
             while (openSet.Count > 0)
             {
-                Tile currentNode = openSet[0];               
+                Tile currentNode = openSet[0];
+                currentNode.Weight = 1; // this is path, lower weight to 'force' pathing preference to path
                 for (int i = 1; i < openSet.Count; i++)
                 {
                     if (openSet[i].FCost < currentNode.FCost || openSet[i].FCost == currentNode.FCost && openSet[i].HCost < currentNode.HCost)
@@ -66,7 +67,7 @@ namespace PcgWorldGenOnStoryGen
 
                         if (!openSet.Contains(neighbour))
                         {
-                            neighbour.Weight = 1;
+                            //neighbour.Weight = 1;
                             openSet.Add(neighbour);
                         }
 
@@ -99,9 +100,9 @@ namespace PcgWorldGenOnStoryGen
             int distY = Math.Abs(nodeA.Y - nodeB.Y);
 
             if (distX > distY)
-                return 14 * distY + 10 * nodeB.Weight + (distX - distY);
+                return 14 * distY + 10 * (distX - distY + nodeB.Weight); // + nodeB.Weight);
 
-            return 14 * distX + 10 * nodeB.Weight + (distY - distX);
+            return 14 * distX + 10 * (distY - distX + nodeB.Weight); //+ nodeB.Weight);
         }
 
         public List<Tile> GetNeighbours(Tile node)
@@ -130,7 +131,10 @@ namespace PcgWorldGenOnStoryGen
                     //if (checkX >= 0 && checkX < grid.gridSizeX && checkY >= 0 && checkY < grid.gridSizeY)
                     //    neighbours.Add(grid.nodes[checkY, checkX]);
                     if (checkX >= 0 && checkX < grid.GetUpperBound(1) && checkY >= 0 && checkY < grid.GetUpperBound(0))
+                    {
+                        if (grid[checkY, checkX] != node)                          
                         neighbours.Add(grid[checkY, checkX]);
+                    }
                 }
             }
             return neighbours;

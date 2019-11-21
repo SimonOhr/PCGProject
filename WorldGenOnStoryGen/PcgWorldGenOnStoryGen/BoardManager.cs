@@ -32,7 +32,7 @@ namespace PcgWorldGenOnStoryGen
             InitGlobalVariables();
 
             //mapMaker.ExctractLocation(DQuest);
-            tiles = mapMaker.Tiles;
+            
             GetQuests();
             EvalQuests();
             MakeMap(ref maps);
@@ -42,7 +42,7 @@ namespace PcgWorldGenOnStoryGen
         {
             tileSize = 32;
             tileTypeCount = 5;
-            sizeOfQuestPool = 50;
+            sizeOfQuestPool = 10;
             rnd = new Random();
             gen = new ActionGen();
             mapMaker = new MapMaker(this, Window, spriteMap);
@@ -71,6 +71,9 @@ namespace PcgWorldGenOnStoryGen
             Console.WriteLine("Constructing Maps...");
             for (int i = 0; i < quests.Count; i++)
             {
+                mapMaker.Clear();
+                mapMaker.CreateGrid();
+                CopyNewGrid();
                 mapMaker.CreateRooms(quests[i]);
                 mapMaker.RunMiners();
                 foreach (Tile tile in mapMaker.GetMapInfo().tileMap)
@@ -79,9 +82,19 @@ namespace PcgWorldGenOnStoryGen
                         tile.SetTileType(TileType.WOOD);
                 }
                 maps.Add(mapMaker.GetMapInfo());
-                maps[i].PrintMapInfo();
-                mapMaker.Clear();
-                mapMaker.CreateGrid();
+                maps[i].PrintMapInfo();                
+                
+            }
+        }
+        void CopyNewGrid()
+        {
+            tiles = mapMaker.Tiles;
+            for (int i = 0; i < mapMaker.Tiles.GetLength(0); i++)
+            {
+                for (int j = 0; j < mapMaker.Tiles.GetLength(1); j++)
+                {
+                    tiles[i, j] = mapMaker.Tiles[i, j];
+                }
             }
         }
 

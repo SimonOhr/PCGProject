@@ -12,7 +12,7 @@ namespace PcgWorldGenOnStoryGen
     class MapMaker
     {
         DebugQuest quest;
-        public Tile[,] Tiles { get; set; }
+        public Tile[,] Tiles;
         public List<Tile> Trail { get; set; }
         List<Tile> islandCandidates;
         public Queue<Tile> IslandQueue { get; set; }
@@ -32,12 +32,12 @@ namespace PcgWorldGenOnStoryGen
             this.Window = Window;
             this.spriteMap = spriteMap;
             this.bm = bm;
-            InitGlobalValues();
-            CreateGrid();
+            InitValues();
+         //   CreateGrid();
             InitGlobalObject();
         }
 
-        void InitGlobalValues()
+        void InitValues()
         {
             tileSize = 32;
             rnd = new Random();
@@ -56,12 +56,20 @@ namespace PcgWorldGenOnStoryGen
         {
             Tiles = new Tile[Game1.ScreenHeight / tileSize, Game1.ScreenWidth / tileSize];
 
+            int[] tempWeights = new int[8];
+            for (int k = 0; k < tempWeights.Length; k++)
+            {
+                tempWeights[k] = k+2;
+            }
+
             for (int i = 0; i < Tiles.GetLength(0); i++)
             {
                 for (int j = 0; j < Tiles.GetLength(1); j++)
                 {
                     Vector2 tempPos = new Vector2(j * tileSize, i * tileSize);
-                    Tiles[i, j] = new Tile(spriteMap, tempPos, j, i);
+                    FisherYates.Shuffle<int>(new Random(), tempWeights);
+                    int tempWeight = tempWeights[0];
+                    Tiles[i, j] = new Tile(spriteMap, tempPos, j, i, tempWeight);
 
                   //  Console.WriteLine($"Tile[i,j] = {Tiles[i, j]} pos info = {Tiles[i, j].Dest.Location} X = {Tiles[i, j].X} ({Tiles[i, j].Dest.Location.X / tileSize}) Y = {Tiles[i, j].Y} ({Tiles[i, j].Dest.Location.Y / tileSize})");
                 }
@@ -73,7 +81,7 @@ namespace PcgWorldGenOnStoryGen
             quest = _quest;
                 for (int j = 0; j < quest.actionArray.Length; j++)
                 {
-                    rooms.Add(new RoomBuilder(Tiles, new Vector2(2, 2), new Vector2(6, 6), quest.actionArray[j].Location).GenerateRoom());
+                    rooms.Add(new RoomBuilder(ref Tiles, new Vector2(2, 2), new Vector2(6, 6), quest.actionArray[j].Location).GenerateRoom());
                 }
 
             // BSPTree BSPTree = new BSPTree(quest);
@@ -82,7 +90,7 @@ namespace PcgWorldGenOnStoryGen
 
         public void RunMiners()
         {
-            pathMiner = new PathingMiner(Tiles, rooms);
+            pathMiner = new PathingMiner(ref Tiles, rooms);
 
             Trail.AddRange(pathMiner.GetTrail());
 
@@ -112,8 +120,7 @@ namespace PcgWorldGenOnStoryGen
         }
 
         public void Clear()
-        {          
-            CreateGrid();
+        {
             rooms.Clear();
         }
 

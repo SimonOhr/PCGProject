@@ -84,7 +84,7 @@ namespace PcgWorldGenOnStoryGen
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.ForestGreen);
             spriteBatch.Begin();
 
             for (int i = 0; i < maps[selectedMap].tileMap.GetLength(0); i++)

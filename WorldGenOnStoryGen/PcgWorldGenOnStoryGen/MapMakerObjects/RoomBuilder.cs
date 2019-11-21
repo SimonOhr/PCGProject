@@ -17,7 +17,7 @@ namespace PcgWorldGenOnStoryGen
         Location location;
         TileType tiletype;
 
-        public RoomBuilder(Tile[,] grid, Vector2 minRoomSize, Vector2 maxRoomSize, Location location)
+        public RoomBuilder(ref Tile[,] grid, Vector2 minRoomSize, Vector2 maxRoomSize, Location location)
         {
             this.grid = grid;
             this.minRoomSize = minRoomSize;
@@ -29,7 +29,7 @@ namespace PcgWorldGenOnStoryGen
             InitVariables();
         }
 
-        public RoomBuilder(Tile[,] grid, Vector2 minRoomSize, Vector2 maxRoomSize, TileType tiletype, Vector2 pos)
+        public RoomBuilder(ref Tile[,] grid, Vector2 minRoomSize, Vector2 maxRoomSize, TileType tiletype, Vector2 pos)
         {
             this.grid = grid;
             this.minRoomSize = minRoomSize;
@@ -144,7 +144,26 @@ namespace PcgWorldGenOnStoryGen
                     entryPoints.Add(grid[(int)selectedRoomPos.Y + i, (int)selectedRoomPos.X + j]);
                 }
             }
-            return entryPoints[rnd.Next(0, entryPoints.Count)];
+            FisherYates.Shuffle<Tile>(new Random(), entryPoints.ToArray());
+            Queue<Tile> popStack = new Queue<Tile>();
+            int iterator = 0;
+            popStack.Enqueue(entryPoints[iterator]);
+            Tile entryPoint = popStack.Dequeue();
+            while (entryPoint.GetTileType() != TileType.NONE)
+            {
+                if (iterator < entryPoints.Count)
+                {
+                    iterator++;
+                }
+                else
+                {
+                    throw new Exception("No free entrypoint found");
+                }
+            popStack.Enqueue(entryPoints[iterator]);
+            entryPoint = popStack.Dequeue();               
+            }
+
+            return entryPoint;
         }
 
         bool CheckTilesIsFree(List<Tile> tiles)
@@ -160,7 +179,7 @@ namespace PcgWorldGenOnStoryGen
         bool EntryIsFree(Tile tile, List<Tile> tiles)
         {
             //freedom?
-            if (tiles.Contains(tile))
+            if (tiles.Contains(tile) && tile.GetTileType() == TileType.NONE)
                 return false;
             return true;
         }
