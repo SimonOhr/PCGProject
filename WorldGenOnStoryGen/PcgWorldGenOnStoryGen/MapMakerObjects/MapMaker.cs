@@ -24,7 +24,7 @@ namespace PcgWorldGenOnStoryGen
         List<Miner> miners;
         Extractor extractor;
         List<Room> rooms;
-        Random rnd;
+        Random rnd;        
 
         int indexY, indexX, tileSize;
         public MapMaker(BoardManager bm, GameWindow Window, Texture2D spriteMap)
@@ -59,7 +59,7 @@ namespace PcgWorldGenOnStoryGen
             int[] tempWeights = new int[8];
             for (int k = 0; k < tempWeights.Length; k++)
             {
-                tempWeights[k] = k+2;
+                tempWeights[k] = k+4;
             }
 
             for (int i = 0; i < Tiles.GetLength(0); i++)
@@ -79,9 +79,11 @@ namespace PcgWorldGenOnStoryGen
         public void CreateRooms(DebugQuest _quest)
         {
             quest = _quest;
+            RoomBuilder.SuccessCount = 0;
+            RoomBuilder.NumberOfRooms = quest.actionArray.Length;
                 for (int j = 0; j < quest.actionArray.Length; j++)
                 {
-                    rooms.Add(new RoomBuilder(ref Tiles, new Vector2(2, 2), new Vector2(6, 6), quest.actionArray[j].Location).GenerateRoom());
+                    rooms.Add(new RoomBuilder(ref Tiles, new Vector2(2, 2), new Vector2(6, 6), quest.actionArray[j].Location).GenerateRoom());                    
                 }
 
             // BSPTree BSPTree = new BSPTree(quest);

@@ -8,7 +8,7 @@ namespace PcgWorldGenOnStoryGen
 {
     static class FisherYates
     {
-        public static void Shuffle<T>(this Random rng, T[] array)
+        public static T[] Shuffle<T>(this Random rng, T[] array)
         {
             int n = array.Length;
             while (n > 1)
@@ -18,6 +18,7 @@ namespace PcgWorldGenOnStoryGen
                 array[n] = array[k];
                 array[k] = temp;
             }
-        }
+            return array;
+        }        
     }
 }

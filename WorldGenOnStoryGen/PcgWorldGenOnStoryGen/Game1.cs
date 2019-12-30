@@ -74,12 +74,25 @@ namespace PcgWorldGenOnStoryGen
                 Exit();
             oldKey = key;
             key = Keyboard.GetState();
-            if (Keyboard.GetState().IsKeyDown(Keys.NumPad1) && selectedMap + 1 < maps.Count && oldKey.IsKeyUp(Keys.NumPad1))
-                selectedMap++;
-            else if (Keyboard.GetState().IsKeyDown(Keys.NumPad1) && selectedMap + 1 > maps.Count)
-                selectedMap = 0;
-          
+            MoveToNext();
+            MoveToPrevious();           
+
             base.Update(gameTime);
+        }
+        void MoveToNext()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && selectedMap + 1 < maps.Count && oldKey.IsKeyUp(Keys.Right))
+                selectedMap++;
+            else if (Keyboard.GetState().IsKeyDown(Keys.Right) && selectedMap + 1 > maps.Count)
+                selectedMap = 0;
+        }
+
+        void MoveToPrevious()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && selectedMap - 1 > 0 && oldKey.IsKeyUp(Keys.Left))
+                selectedMap--;
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left) && selectedMap - 1 > 0)
+                selectedMap = 0;
         }
 
         protected override void Draw(GameTime gameTime)
