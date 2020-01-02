@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace PcgWorldGenOnStoryGen
 {
@@ -74,8 +75,8 @@ namespace PcgWorldGenOnStoryGen
 
         private void TrySize()
         {
-            roomSize.X = rnd.Next((int)minRoomSize.X, (int)maxRoomSize.X);
-            roomSize.Y = rnd.Next((int)minRoomSize.Y, (int)maxRoomSize.Y);
+            roomSize.X = rnd.Next((int)minRoomSize.X, (int)maxRoomSize.X) + 1;
+            roomSize.Y = rnd.Next((int)minRoomSize.Y, (int)maxRoomSize.Y) + 1;
         }
 
         public Room GenerateRoom()
@@ -92,12 +93,11 @@ namespace PcgWorldGenOnStoryGen
             List<Tile> roomGrid = new List<Tile>();
 
 
-            for (int i = -((int)roomSize.Y / 2) + -entryOffset; i < ((int)roomSize.Y / 2); i++)
+            for (int i = -((int)roomSize.Y / 2); i < ((int)roomSize.Y / 2 ); i++)
             {
-                for (int j = -((int)roomSize.X / 2) + -entryOffset; j < ((int)roomSize.X / 2); j++)
+                for (int j = -((int)roomSize.X / 2); j < ((int)roomSize.X / 2 ); j++)
                 {                    
                     roomGrid.Add(grid[(int)selectedRoomPos.Y + i, (int)selectedRoomPos.X + j]);
-
                 }
             }
           
@@ -106,35 +106,44 @@ namespace PcgWorldGenOnStoryGen
             Tile entryPoint = null;
             int errorCount = 0;
 
-            while (!hasFoundValidEntry)
-            {
-                entryPoint = SetEntrypoint(roomSize, selectedRoomPos);
-                //if (EntryIsFree(entrypoint, tiles))
-                    //
-                //else
-                    Console.WriteLine("No Valid Entry Found: {0}", errorCount++);
-                if (entryPoint == null || errorCount > 10)
-                {
-                    Console.WriteLine("No Valid Entry Found");
-                    Console.WriteLine("Rebuilding Room...");
-                    return GenerateRoom();
-                }
-                hasFoundValidEntry = true;
-            }
-
             if (CheckTilesAreFree(roomGrid))
             {
                 if (location != null)
                 {
-                    SuccessCount++;
-                    Console.WriteLine("Number of seccessfully build rooms: {0} / {1}", SuccessCount, NumberOfRooms);
+                    SetTileType(roomGrid);
+                   // SuccessCount++;
+                  //  Console.WriteLine("Number of seccessfully build rooms: {0} / {1}", SuccessCount, NumberOfRooms);
 
-                    return new Room(ref grid, roomGrid, location.LocationType, entryPoint);
+                  //  return new Room(ref grid, roomGrid, location.LocationType, entryPoint, roomSize, selectedRoomPos);
+
                 }
                 // else
                 //   return new Room(ref grid, tiles, tiletype, entrypoint);
-                throw new Exception("Room Location is NULL");
+               else
+                    throw new Exception("Room Location is NULL");
             }
+
+            while (!hasFoundValidEntry)
+            {
+                entryPoint = SetEntrypoint(roomSize, selectedRoomPos);
+                //if (EntryIsFree(entrypoint, tiles))
+                //
+
+                if (entryPoint == null || errorCount > 10)
+                {
+                    Console.WriteLine("No Valid Entry Found: {0}", errorCount++);
+                    Console.WriteLine("Rebuilding Room...");
+                    return GenerateRoom();
+                }
+                else
+                {
+                    SuccessCount++;
+                    Console.WriteLine("Number of seccessfully build rooms: {0} / {1}", SuccessCount, NumberOfRooms);
+
+                    return new Room(roomGrid, location.LocationType, entryPoint);
+                }
+                hasFoundValidEntry = true;
+            }                     
 
             return GenerateRoom();
             // }
@@ -152,13 +161,13 @@ namespace PcgWorldGenOnStoryGen
             int sizeY = (int)size.Y;
             int entryOffset = 1;
             roomPos.X = rnd.Next((sizeX / 2) + entryOffset, (int)gridBounds.X - (sizeX / 2 + entryOffset)); //TODO why / 2? on minimum
-            roomPos.Y = rnd.Next((sizeY / 2) + entryOffset, (int)gridBounds.Y - (sizeY / 2 + entryOffset));  // TODO why / 2?
-
+            roomPos.Y = rnd.Next((sizeY / 2) + entryOffset, (int)gridBounds.Y - (sizeY / 2 + entryOffset));  // TODO why / 2?           
+            
             while (roomPos.X + (sizeX / 2) + entryOffset > gridBounds.X || roomPos.X - (sizeX / 2 + entryOffset) < 0)
                 roomPos.X = rnd.Next(0, (int)gridBounds.X);
             while (roomPos.Y + (sizeY / 2) + entryOffset > gridBounds.Y || roomPos.Y - (sizeY / 2 + entryOffset) < 0)
                 roomPos.Y = rnd.Next(0, (int)gridBounds.Y);
-
+            Thread.Sleep(100);
             return roomPos;
         }
 
@@ -221,6 +230,26 @@ namespace PcgWorldGenOnStoryGen
                     return false;
             }
             return true;
+        }
+
+        void SetTileType(List<Tile> tiles)
+        {
+
+            foreach (Tile tile in tiles)
+            {
+                for (int i = 0; i < grid.GetLength(0); i++)
+                {
+                    for (int j = 0; j < grid.GetLength(1); j++)
+                    {
+                        if (grid[i, j].X == tile.X && grid[i, j].Y == tile.Y)
+                        {
+                            grid[i, j].SetTileType(location.LocationType);
+                            grid[i, j].IsWalkable = false;
+                            grid[i, j].IsBranchTile = false;
+                        }
+                    }
+                }
+            }
         }
 
         //private bool EntryIsFree(Tile tile, List<Tile> tiles)

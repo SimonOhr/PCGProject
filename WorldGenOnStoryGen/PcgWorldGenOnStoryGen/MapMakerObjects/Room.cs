@@ -15,16 +15,20 @@ namespace PcgWorldGenOnStoryGen
         TileType typeOfRoom;
         public Tile pathEntry { get; set; }
         Tile[,] grid;
-        public Room(ref Tile[,] _grid, List<Tile> tiles, TileType typeOfRoom, Tile pathEntry)
+        int entryOffset = 1;
+        Vector2 roomSize, roomPos;
+        public Room(/*ref Tile[,] _grid,*/ List<Tile> tiles, TileType typeOfRoom, Tile pathEntry/*, Vector2 roomSize, Vector2 roomPos*/)
         {
             roomTiles = tiles;            
             this.typeOfRoom = typeOfRoom;
             this.pathEntry = pathEntry;
             if(this.pathEntry.GetTileType() != TileType.NONE)
                 Console.WriteLine("ROOM WITH WRONG TILETYPE CONSTRUCTED");
-            grid = _grid;
+           // grid = _grid;
+            this.roomSize = roomSize;
+            this.roomPos = roomPos;
             InitGlobalVariables();
-            SetTileType();           
+           // SetTileType();           
         }
 
         void InitGlobalVariables()
@@ -32,26 +36,26 @@ namespace PcgWorldGenOnStoryGen
             pathEntry.IsEntry = true;
         }   
         
-        void SetTileType()
-        {         
+        //void SetTileType()
+        //{         
            
-            foreach (Tile tile in roomTiles)
-            {
-                for (int i = 0; i < grid.GetLength(0); i++)
-                {
-                    for (int j = 0; j < grid.GetLength(1); j++)
-                    {
-                        if (grid[i, j].X == tile.X && grid[i, j].Y == tile.Y)
-                        {
-                            grid[i,j].SetTileType(typeOfRoom);
-                            grid[i, j].IsWalkable = false;
-                            grid[i, j].IsBranchTile = false;
-                        }
-                }
-                }
-                              
-            }
+        //    foreach (Tile tile in roomTiles)
+        //    {
+        //        for (int i = 0; i < grid.GetLength(0); i++)
+        //        {
+        //            for (int j = 0; j < grid.GetLength(1); j++)
+        //            {
+        //                if (grid[i, j].X == tile.X && grid[i, j].Y == tile.Y)
+        //                {
+        //                    grid[i,j].SetTileType(typeOfRoom);
+        //                    grid[i, j].IsWalkable = false;
+        //                    grid[i, j].IsBranchTile = false;
+        //                }
+        //        }
+        //        }
+                             
+        //    }           
 
-        }
+        //}        
     }
 }

@@ -1,43 +1,43 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using System.Threading;
 
 namespace PcgWorldGenOnStoryGen
 {
-    class MapMaker
+    internal class MapMaker
     {
-        DebugQuest quest;
+        private DebugQuest quest;
         public Tile[,] Tiles;
         public List<Tile> Trail { get; set; }
-        List<Tile> islandCandidates;
-        public Queue<Tile> IslandQueue { get; set; }
-        BoardManager bm;
-        RoomBuilder roomBuilder;       
-        PathingMiner pathMiner;
-        GameWindow Window;
-        Texture2D spriteMap;
-        List<Miner> miners;
-        Extractor extractor;
-        List<Room> rooms;
-        Random rnd;        
 
-        int indexY, indexX, tileSize;
+        private List<Tile> islandCandidates;
+        public Queue<Tile> IslandQueue { get; set; }
+
+        private readonly BoardManager bm;
+        private readonly RoomBuilder roomBuilder;
+        private PathingMiner pathMiner;
+        private readonly GameWindow Window;
+        private readonly Texture2D spriteMap;
+        private List<Miner> miners;
+        private Extractor extractor;
+        private List<Room> rooms;
+        private Random rnd;
+        private readonly int indexY;
+        private readonly int indexX;
+        private int tileSize;
+
         public MapMaker(BoardManager bm, GameWindow Window, Texture2D spriteMap)
         {
             this.Window = Window;
             this.spriteMap = spriteMap;
             this.bm = bm;
             InitValues();
-         //   CreateGrid();
+            //   CreateGrid();
             InitGlobalObject();
         }
 
-        void InitValues()
+        private void InitValues()
         {
             tileSize = 32;
             rnd = new Random();
@@ -45,10 +45,10 @@ namespace PcgWorldGenOnStoryGen
             rooms = new List<Room>();
         }
 
-        void InitGlobalObject()
+        private void InitGlobalObject()
         {
             Trail = new List<Tile>();
-            miners = new List<Miner>();          
+            miners = new List<Miner>();
             extractor = new Extractor(this);
         }
 
@@ -59,7 +59,13 @@ namespace PcgWorldGenOnStoryGen
             int[] tempWeights = new int[8];
             for (int k = 0; k < tempWeights.Length; k++)
             {
-                tempWeights[k] = k+4;
+                tempWeights[k] = k + 4;
+            }
+            tempWeights = FisherYates.Shuffle<int>(new Random(), tempWeights);
+            Queue<int> shuffledWeights = new Queue<int>();
+            for (int queueNumber = 0; queueNumber < tempWeights.Length; queueNumber++)
+            {
+                shuffledWeights.Enqueue(tempWeights[queueNumber]);
             }
 
             for (int i = 0; i < Tiles.GetLength(0); i++)
@@ -67,11 +73,13 @@ namespace PcgWorldGenOnStoryGen
                 for (int j = 0; j < Tiles.GetLength(1); j++)
                 {
                     Vector2 tempPos = new Vector2(j * tileSize, i * tileSize);
-                    FisherYates.Shuffle<int>(new Random(), tempWeights);
-                    int tempWeight = tempWeights[0];
+                                       
+                    int tempWeight = shuffledWeights.Dequeue();
+
                     Tiles[i, j] = new Tile(spriteMap, tempPos, j, i, tempWeight);
 
-                  //  Console.WriteLine($"Tile[i,j] = {Tiles[i, j]} pos info = {Tiles[i, j].Dest.Location} X = {Tiles[i, j].X} ({Tiles[i, j].Dest.Location.X / tileSize}) Y = {Tiles[i, j].Y} ({Tiles[i, j].Dest.Location.Y / tileSize})");
+                    shuffledWeights.Enqueue(tempWeight);
+                    //  Console.WriteLine($"Tile[i,j] = {Tiles[i, j]} pos info = {Tiles[i, j].Dest.Location} X = {Tiles[i, j].X} ({Tiles[i, j].Dest.Location.X / tileSize}) Y = {Tiles[i, j].Y} ({Tiles[i, j].Dest.Location.Y / tileSize})");
                 }
             }
         }
@@ -81,10 +89,14 @@ namespace PcgWorldGenOnStoryGen
             quest = _quest;
             RoomBuilder.SuccessCount = 0;
             RoomBuilder.NumberOfRooms = quest.actionArray.Length;
-                for (int j = 0; j < quest.actionArray.Length; j++)
-                {
-                    rooms.Add(new RoomBuilder(ref Tiles, new Vector2(2, 2), new Vector2(6, 6), quest.actionArray[j].Location).GenerateRoom());                    
-                }
+            RoomBuilder roomBuilder;
+            Room room;
+            for (int j = 0; j < quest.actionArray.Length; j++)
+            {
+                roomBuilder = new RoomBuilder(ref Tiles, new Vector2(2, 2), new Vector2(6, 6), quest.actionArray[j].Location);
+                room = roomBuilder.GenerateRoom();
+                rooms.Add(room);
+            }
 
             // BSPTree BSPTree = new BSPTree(quest);
             // BSPTree.MakeTree(Tiles, new Vector2(2, 2), new Vector2(5, 5), 1);          
